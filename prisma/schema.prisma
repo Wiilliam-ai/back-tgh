@@ -33,14 +33,10 @@ model Customer {
   fullName String
   email String
   cardId String @db.Char(11)
-  passrod String @db.Text
+  password String @db.Text
   projects Project[]
 }
 
-model Task {
-  id Int @id @default(autoincrement())
-  projects Project[]
-}
 
 model Project {
   id Int @id @default(autoincrement())
@@ -48,8 +44,14 @@ model Project {
   description String @db.Text
   dateSend DateTime @db.Date
   requiriments Json
-  projecTask Task @relation(fields: [taskId],references: [id]) 
-  taskId Int
   projectCustom Customer @relation(fields: [customerId],references: [id])
   customerId Int
+  tasks Task[]
+}
+
+model Task {
+  id Int @id @default(autoincrement())
+  title String
+  taskProject Project @relation(fields: [projectId], references: [id])
+  projectId Int
 }
